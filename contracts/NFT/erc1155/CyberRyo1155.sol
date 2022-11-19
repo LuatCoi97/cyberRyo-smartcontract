@@ -29,23 +29,19 @@ contract CyberRyo1155 is Ownable, ERC1155, ERC1155Burnable {
         _baseUri = newuri;
     }
 
-    function totalSupply(uint256 id) public view virtual returns (uint256) {
-        return _totalSupply[id];
+    function totalSupply() public view virtual returns (uint256) {
+        return _totalSupply[1];
     }
 
-    function exists(uint256 id) public view virtual returns (bool) {
-        return totalSupply(id) > 0;
+    function exists() public view virtual returns (bool) {
+        return totalSupply() > 0;
     }
 
-    function mint(address owner, uint256 amountMint, uint256 amount) public {
-        for (uint256 i = 0; i < amountMint; i ++) {
-           _tokenIdCounter.increment();
-            uint256 tokenId = _tokenIdCounter.current();
-            _mint(owner, tokenId, amount, '');
-        }
+    function mint(address owner, uint256 amount) public {
+        _mint(owner, 1, amount, '');  
     }
 
-    function uri(uint256 tokenId)
+    function uri(uint256)
     public
     view
     virtual
@@ -53,22 +49,13 @@ contract CyberRyo1155 is Ownable, ERC1155, ERC1155Burnable {
     returns (string memory)
   {
     require(
-      exists(tokenId),
+      exists(),
       "ERC1155Metadata: URI query for nonexistent token"
     );
     return bytes(_baseUri).length > 0
-        ? string(abi.encodePacked(_baseUri, tokenId.toString()))
+        ? string(abi.encodePacked(_baseUri, '1'))
         : "";
   }
-
-    function mintBatch(
-        address to,
-        uint256[] memory ids,
-        uint256[] memory amounts,
-        bytes memory data
-    ) public virtual onlyOwner {
-        _mintBatch(to, ids, amounts, data);
-    }
 
     function _mint(
         address account,
@@ -78,17 +65,5 @@ contract CyberRyo1155 is Ownable, ERC1155, ERC1155Burnable {
     ) internal virtual override {
         super._mint(account, id, amount, data);
         _totalSupply[id] += amount;
-    }
-
-    function _mintBatch(
-        address to,
-        uint256[] memory ids,
-        uint256[] memory amounts,
-        bytes memory data
-    ) internal virtual override {
-        super._mintBatch(to, ids, amounts, data);
-        for (uint256 i = 0; i < ids.length; ++i) {
-            _totalSupply[ids[i]] += amounts[i];
-        }
     }
 }

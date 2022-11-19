@@ -35,9 +35,6 @@ contract ERC721A is Context, ERC165, IERC721, IERC721Metadata {
     // Token symbol
     string private _symbol;
 
-    // Revealed
-    bool public revealed;
-
     // type NFT
     bytes32 public constant TYPE_1 = keccak256("TYPE_1");
     bytes32 public constant TYPE_2 = keccak256("TYPE_2");
@@ -45,17 +42,11 @@ contract ERC721A is Context, ERC165, IERC721, IERC721Metadata {
     bytes32 public constant TYPE_4 = keccak256("TYPE_4");
     bytes32 public constant TYPE_5 = keccak256("TYPE_5");
 
-    // default URI
-    string public defaultURI;
-
     // metadata URI
     string public _baseTokenURI;
 
     // collection size with round
     uint256 public collectionSize;
-
-    // maxBatchSize
-    uint256 public maxBatchSize;
 
     // curent index by round,type
     mapping(bytes32 => uint256) public currentIndex;
@@ -81,13 +72,11 @@ contract ERC721A is Context, ERC165, IERC721, IERC721Metadata {
     constructor(
         string memory name_,
         string memory symbol_,
-        uint256 collectionSize_,
-        uint256 maxBatchSize_
+        uint256 collectionSize_
     ) {
         _name = name_;
         _symbol = symbol_;
         collectionSize = collectionSize_;
-        maxBatchSize = maxBatchSize_;
     }
 
     /**
@@ -224,10 +213,6 @@ contract ERC721A is Context, ERC165, IERC721, IERC721Metadata {
             _exists(tokenId),
             "ERC721Metadata: URI query for nonexistent token"
         );
-
-        if (!revealed) {
-            return defaultURI;
-        }
 
         return
             bytes(_baseTokenURI).length > 0
