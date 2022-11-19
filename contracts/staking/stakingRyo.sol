@@ -37,7 +37,7 @@ contract StakingRyo is
     {
         require(
             tokenIds.length != 0,
-            "ShinikiCamPaign: input tokenIds is invalid"
+            "StakingRyo: input tokenIds is invalid"
         );
         for (uint256 i = 0; i < tokenIds.length; i++) {
             uint256 tokenId = tokenIds[i];
@@ -61,7 +61,7 @@ contract StakingRyo is
     {
         require(
             tokenIds.length != 0,
-            "ShinikiCamPaign: input tokenIds is invalid"
+            "StakingRyo: input tokenIds is invalid"
         );
         for (uint256 i = 0; i < tokenIds.length; i++) {
             uint256 tokenId = tokenIds[i];

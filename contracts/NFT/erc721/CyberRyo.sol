@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/token/common/ERC2981.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Shiniki is Ownable, ERC721A, ReentrancyGuard, Pausable, ERC2981 {
+contract CyberRyo is Ownable, ERC721A, ReentrancyGuard, Pausable, ERC2981 {
 
     constructor(
         uint256 collectionSize_
@@ -26,7 +26,7 @@ contract Shiniki is Ownable, ERC721A, ReentrancyGuard, Pausable, ERC2981 {
     modifier callerIsUser() {
         require(
             tx.origin == msg.sender,
-            "Shiniki: The caller is another contract"
+            "CyberRyo: The caller is another contract"
         );
         _;
     }
@@ -43,11 +43,11 @@ contract Shiniki is Ownable, ERC721A, ReentrancyGuard, Pausable, ERC2981 {
     ) external payable nonReentrant callerIsUser whenNotPaused {
         require(
             numberMinted(msg.sender) + total <= 5,
-            "Shiniki: reached max supply");
+            "CyberRyo: reached max supply");
         for (uint8 i = 0; i < typeMints.length; i++) {
             require(
             totalSupply(typeMints[i]) + quantities[i] <= 600,
-            "Shiniki: reached max supply"
+            "CyberRyo: reached max supply"
             );
             _safeMint(msg.sender, quantities[i], typeMints[i]);
         }
@@ -64,7 +64,7 @@ contract Shiniki is Ownable, ERC721A, ReentrancyGuard, Pausable, ERC2981 {
     ) public onlyOwner whenNotPaused {
         require(
             totalSupply() + total <= collectionSize,
-            "Shiniki: reached max supply"
+            "CyberRyo: reached max supply"
         );
 
         uint256 quantity = total / 5;
